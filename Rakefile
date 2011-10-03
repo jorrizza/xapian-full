@@ -22,6 +22,8 @@ task :default do
 	system! "mkdir -p lib"
 
 	Dir.chdir core do
+		# OpenBSD compatibility patch (from the ports tree)
+		system! "perl -pi -e \"s,for ac_lib in '' uuid,for ac_lib in '' e2fs-uuid,\" configure"
 		system! "./configure --prefix=#{prefix} --exec-prefix=#{prefix}"
 		system! "make clean all"
 		system! "cp -r .libs/* ../lib/"
